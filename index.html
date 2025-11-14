@@ -1,0 +1,1198 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <title>nQuery - Next-gen jQuery for Modern UX</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description"
+        content="nQuery is a next-generation, UX-first DOM engine that combines chainable APIs, signals, query stores, motion tokens, accessible UI primitives, and a runtime UX linter." />
+    <meta name="theme-color" content="#0b0e14" />
+    <link rel="stylesheet" href="./app.css" />
+</head>
+
+<body>
+    <!-- TOP NAV -->
+    <header class="top-nav" data-anim="fade-down">
+        <div class="top-nav-inner">
+            <div class="brand">
+                <div class="brand-logo"><a href="/">nQ</a></div>
+                <div>
+                    <div class="brand-title">nQuery</div>
+                    <div class="brand-subtitle">Next-gen jQuery for modern user interfaces</div>
+                </div>
+            </div>
+            <nav class="nav-links" aria-label="Primary">
+                <a href="#hero" class="js-view-switch" data-view="website">Home</a>
+                <a href="#docs" class="js-view-switch" data-view="docs">Docs</a>
+                <a href="#playground" class="js-view-switch" data-view="playground">Playground</a>
+                <button class="nav-cta js-view-switch" type="button" data-view="docs">
+                    <span class="dot"></span>
+                    <span>Get started</span>
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <!-- WEBSITE / MARKETING VIEW -->
+        <div id="view-website" class="view view-active">
+            <!-- HERO -->
+            <section id="hero" class="band band-hero" data-anim="fade-in">
+                <div class="hero-inner">
+                    <div class="hero-grid" data-anim="stagger">
+                        <div class="hero-copy" data-anim="fade-up" data-anim-delay="40">
+                            <h1 class="hero-heading">
+                                Build delightful UIs with just the browser.
+                            </h1>
+                            <p class="hero-tagline">
+                                nQuery brings jQuery’s ergonomics to 2025: signals, query stores,
+                                motion tokens, UX-safe components, and a runtime accessibility linter -
+                                all in one small modern DOM engine.
+                            </p>
+
+                            <div class="hero-metas">
+                                <div class="hero-meta-pill">No build step</div>
+                                <div class="hero-meta-pill">DOM-first · framework-agnostic</div>
+                                <div class="hero-meta-pill">A11y and UX lint built in</div>
+                            </div>
+
+                            <div class="hero-badges">
+                                <div class="badge">
+                                    <span>UX-first primitives</span>
+                                </div>
+                                <div class="badge">
+                                    <span>Signals + query stores</span>
+                                </div>
+                                <div class="badge">
+                                    <span>Runtime a11y &amp; UX lint</span>
+                                </div>
+                            </div>
+
+                            <div id="get-started" class="hero-ctas">
+                                <button type="button" class="btn-primary js-view-switch" data-view="docs">
+                                    Read the docs
+                                </button>
+                                <button type="button" class="btn-secondary js-view-switch" data-view="playground">
+                                    Try the playground
+                                </button>
+                                <button type="button" class="btn-ghost hero-cta-secondary"
+                                    onclick="document.getElementById('positioning').scrollIntoView({behavior:'smooth'})">
+                                    See where nQuery fits
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="hero-snippet" data-anim="fade-up" data-anim-delay="80">
+                            <div class="hero-snippet-title">
+                                <span>nQuery in 15 seconds</span>
+                                <span class="hero-snippet-pill">Vanilla JS · DOM · Signals</span>
+                            </div>
+                            <pre><code>// index.html
+&lt;div id="card"&gt;&lt;/div&gt;
+&lt;button id="like"&gt;Like&lt;/button&gt;
+
+&lt;script type="module"&gt;
+  import nq from "./nquery.js";
+
+  const likes = nq.signal(0);
+
+  nq.ready(() =&gt; {
+    nq("#card")
+      .uiCard({ elevateOnHover: true })
+      .bindText(() =&gt; `Likes: ${likes.value}`);
+
+    nq("#like")
+      .uiAsyncButton(async () =&gt; {
+        await new Promise(r =&gt; setTimeout(r, 350));
+        likes.update(n =&gt; n + 1);
+      }, { loadingText: "Liking…" });
+  });
+&lt;/script&gt;</code></pre>
+                            <div class="hero-snippet-meta">
+                                <div class="hero-snippet-meta-row">
+                                    <span class="hero-snippet-meta-label">Bundle</span>
+                                    <span class="hero-snippet-meta-value">~7 KB gzipped · no build step.</span>
+                                </div>
+                                <div class="hero-snippet-meta-row">
+                                    <span class="hero-snippet-meta-label">Ships with</span>
+                                    <span class="hero-snippet-meta-value">
+                                        signals · query stores · async buttons · forms.
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="hero-footnote" data-anim="fade-up" data-anim-delay="120">
+                        <div class="hero-footnote-item">
+                            <span class="hero-footnote-label">Use it with</span>
+                            <span class="hero-footnote-value">static sites · Rails / Django · PHP · docs ·
+                                dashboards</span>
+                        </div>
+                        <div class="hero-footnote-item">
+                            <span class="hero-footnote-label">Perfect for</span>
+                            <span class="hero-footnote-value">“just enough interactivity” without a full SPA</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+
+            <!-- BAND 1: CREATE UI -->
+            <section class="band" data-anim="fade-in">
+                <div class="band-inner">
+                    <h2 class="band-title">Create user interfaces from real DOM nodes</h2>
+                    <p class="band-subtitle">
+                        Compose cards, buttons, lists, and forms directly on real DOM elements.
+                        nQuery’s chainable API keeps your UI code small and expressive -
+                        without a virtual DOM or heavy framework runtime.
+                    </p>
+
+                    <div class="band-grid" data-anim="stagger">
+                        <div class="band-card" data-anim="fade-up" data-anim-delay="40">
+                            <div class="band-tag">From selectors to components</div>
+                            <h3>One line from “div” to “card”.</h3>
+                            <p>
+                                The core <code>nq()</code> selector wraps DOM nodes in a tiny
+                                object with DOM, event, binding, and UI methods.
+                                It feels like jQuery, but speaks modern UX.
+                            </p>
+                            <pre><code>nq(".card")
+  .uiCard({ elevateOnHover: true })
+  .uiMotion("slideInBottom")
+  .on("click", () =&gt; {
+    nq.toast.info("Card clicked");
+  });</code></pre>
+                            <ul class="band-points">
+                                <li>Chain DOM, motion, and events together.</li>
+                                <li>Apply consistent tokens and motion defaults.</li>
+                                <li>No build step required - it’s just JavaScript.</li>
+                            </ul>
+                        </div>
+
+                        <div class="band-card" data-anim="fade-up" data-anim-delay="80">
+                            <div class="band-tag">Better buttons by default</div>
+                            <h3>Async buttons that can’t forget loading states.</h3>
+                            <p>
+                                <code>.uiAsyncButton()</code> wraps an async function with loading,
+                                disabled state, error toasts, and subtle success motion.
+                            </p>
+                            <pre><code>nq("#save").uiAsyncButton(async () =&gt; {
+  await api.saveForm();
+}, {
+  loadingText: "Saving…",
+  successText: "Saved",
+  errorText:   "Could not save"
+});</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- BAND 2: SIGNALS -->
+            <section class="band" data-anim="fade-in">
+                <div class="band-inner">
+                    <h2 class="band-title">Write components with signals and bindings</h2>
+                    <p class="band-subtitle">
+                        Signals provide fine-grained reactivity without components or templates.
+                        Bind them to text, attributes, classes, and lists using a small set of
+                        helpers that stay close to the DOM.
+                    </p>
+
+                    <div class="band-grid" data-anim="stagger">
+                        <div class="band-card" data-anim="fade-up" data-anim-delay="40">
+                            <div class="band-tag">Signals · <code>nq.signal()</code></div>
+                            <h3>State in one line.</h3>
+                            <pre><code>const count = nq.signal(0);
+
+nq("#value").bindText(count);
+nq("#inc").on("click", () =&gt; count.update(n =&gt; n + 1));</code></pre>
+                            <p>Signals are plain objects with <code>.value</code> and <code>.update()</code>.</p>
+                            <ul class="band-points">
+                                <li>No global stores - just values and subscriptions.</li>
+                                <li>Bind multiple elements to the same signal.</li>
+                                <li>Derive values using closures in <code>bindText()</code>.</li>
+                            </ul>
+                        </div>
+
+                        <div class="band-card" data-anim="fade-up" data-anim-delay="80">
+                            <div class="band-tag">Lists · <code>bindList()</code></div>
+                            <h3>Render lists directly from query stores.</h3>
+                            <pre><code>const todos = nq.query("todos", fetchTodos);
+
+nq("#list").bindList(todos, (todo, i) =&gt; `
+  &lt;li&gt;${i + 1}. ${todo.title}&lt;/li&gt;
+`);
+
+nq("#list").uiLoadable(todos);</code></pre>
+                            <p>
+                                nQuery patches the DOM with keyed elements, and
+                                <code>.uiLoadable()</code> wraps loading, error, and retry UX.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- BAND 3: INTERACTIVITY -->
+            <section class="band" data-anim="fade-in">
+                <div class="band-inner">
+                    <h2 class="band-title">Add interactivity wherever you need it</h2>
+                    <p class="band-subtitle">
+                        Drop nQuery into a static site or a multi-page server app.
+                        Attach it to islands of interactivity and let the runtime handle
+                        motion, toasts, forms, and accessibility.
+                    </p>
+
+                    <div class="band-grid" data-anim="stagger">
+                        <div class="band-card" data-anim="fade-up" data-anim-delay="40">
+                            <div class="band-tag">Forms · <code>.uiForm()</code></div>
+                            <h3>Validation, messages, and async submit built in.</h3>
+                            <pre><code>nq("#profile-form").uiForm({
+  mode: "onBlur",
+  schema: {
+    name:  { required: true, min: 3 },
+    email: { required: true, email: true }
+  },
+  async onSubmit(values, ctx) {
+    await api.save(values);
+    ctx.success("Profile saved");
+  }
+});</code></pre>
+                        </div>
+
+                        <div class="band-card" data-anim="fade-up" data-anim-delay="80">
+                            <div class="band-tag">Modals, tabs, accordion</div>
+                            <h3>Accessible components from ordinary markup.</h3>
+                            <pre><code>// Modal
+const modal = nq("#my-modal").uiModal();
+nq("#open").uiButton("primary").on("click", () =&gt; modal.open());
+
+// Tabs
+nq("#tabs").uiTabs();
+
+// Accordion
+nq("#faq").uiAccordion({ multi: false });</code></pre>
+                            <p>
+                                All components ship with keyboard support and ARIA attributes out of the box.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- BAND 4: POSITIONING / COMPARISON SUMMARY -->
+            <section id="positioning" class="band band-positioning" data-anim="fade-in">
+                <div class="band-inner">
+                    <h2 class="band-title">Where nQuery fits in your front-end stack</h2>
+                    <p class="band-subtitle">
+                        nQuery is not a replacement for React or Vue - it’s a DOM-first engine for when
+                        you want rich UX without committing to a full SPA framework.
+                    </p>
+
+                    <div class="band-grid band-grid-tight" data-anim="stagger">
+                        <div class="band-card" data-anim="fade-up" data-anim-delay="40">
+                            <div class="band-tag">nQuery vs. jQuery</div>
+                            <h3>Same ergonomics, modern runtime.</h3>
+                            <ul class="band-points">
+                                <li><strong>nQuery:</strong> signals, query stores, UX lint, a11y-aware UI, motion
+                                    tokens.</li>
+                                <li><strong>jQuery:</strong> great DOM &amp; events, but no reactive model or UX
+                                    primitives.</li>
+                                <li>Upgrade legacy jQuery-style flows without rewriting everything.</li>
+                            </ul>
+                        </div>
+
+                        <div class="band-card" data-anim="fade-up" data-anim-delay="80">
+                            <div class="band-tag">nQuery vs. React / Vue</div>
+                            <h3>When you don’t need a full app shell.</h3>
+                            <ul class="band-points">
+                                <li><strong>Use nQuery</strong> for docs, marketing pages, dashboards, admin tools.</li>
+                                <li><strong>Use React/Vue</strong> when you need complex routing, component trees, and
+                                    SPA state.</li>
+                                <li>nQuery plays nicely <em>next to</em> frameworks inside the same page.</li>
+                            </ul>
+                        </div>
+
+                        <div class="band-card" data-anim="fade-up" data-anim-delay="120">
+                            <div class="band-tag">nQuery vs. Alpine / HTMX</div>
+                            <h3>Signals + query stores + UX lint.</h3>
+                            <ul class="band-points">
+                                <li>Alpine/HTMX focus on HTML-driven behavior and server interactions.</li>
+                                <li>nQuery gives you a proper signal model, async query primitives, and UX devtools.
+                                </li>
+                                <li>Use nQuery when you want a “DOM engine” rather than attribute snippets.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="compare-table-wrap" data-anim="fade-up" data-anim-delay="160">
+                        <table class="table table-compact">
+                            <thead>
+                                <tr>
+                                    <th>Tool</th>
+                                    <th>Setup</th>
+                                    <th>Mental model</th>
+                                    <th>Best for</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>nQuery</strong></td>
+                                    <td>Drop-in ESM file</td>
+                                    <td>DOM + signals + small UI primitives</td>
+                                    <td>Modern interactivity on existing pages</td>
+                                </tr>
+                                <tr>
+                                    <td>jQuery</td>
+                                    <td>Script tag</td>
+                                    <td>DOM utilities</td>
+                                    <td>Legacy projects, simple DOM tasks</td>
+                                </tr>
+                                <tr>
+                                    <td>React / Vue</td>
+                                    <td>Build step + bundler</td>
+                                    <td>Virtual DOM + components</td>
+                                    <td>SPAs, complex component hierarchies</td>
+                                </tr>
+                                <tr>
+                                    <td>Alpine / HTMX</td>
+                                    <td>Script tag</td>
+                                    <td>HTML attributes + server-driven UI</td>
+                                    <td>Server-centric apps with light JS</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- BAND 5: CASE STUDIES / USE CASES -->
+            <section class="band band-usecases" data-anim="fade-in">
+                <div class="band-inner">
+                    <h2 class="band-title">Case studies &amp; usage patterns</h2>
+                    <p class="band-subtitle">
+                        nQuery shines when you need “just enough front-end” - powerful UX, real
+                        performance, and minimal ceremony.
+                    </p>
+
+                    <div class="band-grid" data-anim="stagger">
+                        <article class="band-card" data-anim="fade-up" data-anim-delay="40">
+                            <div class="band-tag">Case study · Docs &amp; marketing sites</div>
+                            <h3>Interactive docs without a framework.</h3>
+                            <p>
+                                A documentation site uses static HTML for content and nQuery for search,
+                                copy-to-clipboard,
+                                interactive demos, and feedback forms.
+                            </p>
+                            <ul class="band-points">
+                                <li>Drop nQuery into existing Markdown/MDX builds.</li>
+                                <li>Use <code>uiCard</code>, <code>uiTabs</code>, and <code>uiForm</code> for on-page
+                                    demos.</li>
+                                <li>Let the UX linter catch accessibility regressions as docs grow.</li>
+                            </ul>
+                        </article>
+
+                        <article class="band-card" data-anim="fade-up" data-anim-delay="80">
+                            <div class="band-tag">Case study · Internal tools</div>
+                            <h3>Admin dashboards in Rails / Django.</h3>
+                            <p>
+                                A product team enhances server-rendered dashboards with signals, query stores,
+                                and async buttons - no SPA shell needed.
+                            </p>
+                            <ul class="band-points">
+                                <li>Bind filters and tables to <code>nq.signal()</code> and <code>nq.query()</code>.
+                                </li>
+                                <li>Use <code>uiVirtualList</code> to handle thousands of rows smoothly.</li>
+                                <li>Keep the routing, auth, and rendering on the server.</li>
+                            </ul>
+                        </article>
+
+                        <article class="band-card" data-anim="fade-up" data-anim-delay="120">
+                            <div class="band-tag">Case study · Design systems</div>
+                            <h3>Token-driven components, without React.</h3>
+                            <p>
+                                A design system team builds token-aware cards, buttons, layouts, and toasts with nQuery,
+                                and exposes them as “just JavaScript” for any app to consume.
+                            </p>
+                            <ul class="band-points">
+                                <li>Drive theming via <code>nq.config()</code> and design tokens.</li>
+                                <li>Package plugins like <code>.uiTimeline()</code> or <code>.uiStepper()</code>.</li>
+                                <li>Ship a small, dependency-free UI layer for multiple stacks.</li>
+                            </ul>
+                        </article>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- DOCS VIEW -->
+        <div id="view-docs" class="view" hidden>
+            <!-- DOCS -->
+            <section id="docs" class="band docs-band">
+                <div class="docs-shell">
+                    <!-- SIDEBAR -->
+                    <aside class="docs-sidebar" aria-label="Documentation navigation">
+                        <nav class="docs-nav">
+                            <div class="docs-nav-title">Documentation</div>
+
+                            <div class="docs-nav-section">
+                                <div class="docs-nav-section-title">Guide</div>
+                                <ul>
+                                    <li><a href="#docs-intro">Introduction</a></li>
+                                    <li><a href="#guide-getting-started">Getting started</a></li>
+                                    <li><a href="#guide-signals">Signals</a></li>
+                                    <li><a href="#guide-queries">Queries</a></li>
+                                    <li><a href="#guide-bindings">Bindings</a></li>
+                                </ul>
+                            </div>
+
+                            <div class="docs-nav-section">
+                                <div class="docs-nav-section-title">API</div>
+                                <ul>
+                                    <li><a href="#api-global">Global API</a></li>
+                                    <li><a href="#api-dom">DOM &amp; events</a></li>
+                                    <li><a href="#api-ui">UI components</a></li>
+                                    <li><a href="#api-patterns">Patterns</a></li>
+                                    <li><a href="#api-layout">Layout</a></li>
+                                    <li><a href="#api-motion">Motion</a></li>
+                                    <li><a href="#api-a11y">Accessibility</a></li>
+                                    <li><a href="#api-devtools">Devtools / UX lint</a></li>
+                                    <li><a href="#api-plugins">Plugins</a></li>
+                                    <li><a href="#api-summary">Full API list</a></li>
+                                </ul>
+                            </div>
+                        </nav>
+                    </aside>
+
+                    <!-- MAIN DOCS -->
+                    <main class="docs-main">
+                        <article class="docs-card">
+                            <!-- INTRO -->
+                            <section id="docs-intro" class="doc-section">
+                                <h2>1. Introduction</h2>
+                                <p>
+                                    nQuery is a small DOM library that modernizes the ideas behind jQuery:
+                                    chainable selectors, but with signals, query stores, motion tokens,
+                                    accessible components, and a runtime UX linter built in.
+                                </p>
+                                <div class="callout info">
+                                    <strong>Zero build required.</strong> Include
+                                    <code>nquery.js</code> next to your HTML and import it using
+                                    <code>&lt;script type="module"&gt;</code>. It works great in static sites,
+                                    server-rendered apps, and alongside other frameworks.
+                                </div>
+                            </section>
+
+                            <!-- GETTING STARTED -->
+                            <section id="guide-getting-started" class="doc-section">
+                                <h2>2. Getting started</h2>
+
+                                <h3>2.1 Include the script</h3>
+                                <pre><code class="language-html">&lt;!-- index.html --&gt;
+&lt;div id="app"&gt;Loading…&lt;/div&gt;
+
+&lt;script type="module"&gt;
+  import nq from "./nquery.js";
+
+  nq.ready(() =&gt; {
+    nq("#app").text("Hello from nQuery").uiCard({ elevateOnHover: true });
+  });
+&lt;/script&gt;</code></pre>
+
+                                <h3>2.2 The selector</h3>
+                                <pre><code class="language-js">const $btns  = nq("button.primary");  // CSS selector
+const $card  = nq(document.getElementById("card"));  // DOM node
+const $rows  = nq(document.querySelectorAll(".row")); // NodeList</code></pre>
+
+                                <p>
+                                    Each call returns a chainable collection with methods like
+                                    <code>.text()</code>, <code>.on()</code>, <code>.uiCard()</code>,
+                                    <code>.bindText()</code> and more.
+                                </p>
+                            </section>
+
+                            <!-- SIGNALS -->
+                            <section id="guide-signals" class="doc-section">
+                                <h2>3. Signals</h2>
+                                <p>
+                                    Signals are reactive values used across nQuery: form state,
+                                    counters, derived labels, query data, and more.
+                                </p>
+
+                                <h3>3.1 Creating a signal</h3>
+                                <pre><code class="language-js">const count = nq.signal(0);
+
+console.log(count.value);  // 0
+count.value = 1;           // subscribers are notified
+count.update(n =&gt; n + 1);  // 2</code></pre>
+
+                                <h3>3.2 Subscribing</h3>
+                                <pre><code class="language-js">const unsubscribe = count.subscribe(value =&gt; {
+  console.log("Count changed:", value);
+});
+
+count.value = 3;
+unsubscribe();</code></pre>
+
+                                <h3>3.3 Binding signals to DOM</h3>
+                                <pre><code class="language-js">const name = nq.signal("Ada");
+
+nq("#name").bindText(name);              // textContent
+nq("#avatar").bindAttr({ src: avatarUrl }); // attributes
+nq("#card").bindClass({ "is-active": name });</code></pre>
+                            </section>
+
+                            <!-- QUERIES -->
+                            <section id="guide-queries" class="doc-section">
+                                <h2>4. Query stores</h2>
+                                <p>
+                                    Query stores wrap async fetchers with status, error, and data signals
+                                    plus a <code>refetch()</code> method.
+                                </p>
+
+                                <h3>4.1 Creating a query</h3>
+                                <pre><code class="language-js">const users = nq.query("users", async () =&gt; {
+  const res = await fetch("/api/users");
+  if (!res.ok) throw new Error("Failed to load");
+  return res.json();
+}, {
+  staleTime: 60_000,     // optional cache window
+  initialFetch: true
+});</code></pre>
+
+                                <h3>4.2 Using query state</h3>
+                                <pre><code class="language-js">users.status.value;  // 'idle' | 'loading' | 'success' | 'error'
+users.data.value;    // array or undefined
+users.error.value;   // Error | null
+
+users.refetch(true); // force fresh fetch</code></pre>
+
+                                <h3>4.3 Rendering lists from queries</h3>
+                                <pre><code class="language-js">nq("#users").bindList(users, (user) =&gt; `
+  &lt;div&gt;${user.name}&lt;/div&gt;
+`);
+
+nq("#users").uiLoadable(users, { skeletonHeight: "22px" });</code></pre>
+                            </section>
+
+                            <!-- BINDINGS -->
+                            <section id="guide-bindings" class="doc-section">
+                                <h2>5. Bindings</h2>
+
+                                <h3>5.1 <code>.bindText(signalOrFn)</code></h3>
+                                <p>Bind <code>textContent</code> to a signal or derived function.</p>
+                                <pre><code class="language-js">const first = nq.signal("Ada");
+const last  = nq.signal("Lovelace");
+
+nq("#full-name").bindText(() =&gt; `${first.value} ${last.value}`);</code></pre>
+
+                                <h3>5.2 <code>.bindAttr(map)</code></h3>
+                                <pre><code class="language-js">const src = nq.signal("/avatar-a.svg");
+
+nq("#avatar").bindAttr({
+  src,
+  alt: () =&gt; `Avatar updated @ ${new Date().toLocaleTimeString()}`
+});</code></pre>
+
+                                <h3>5.3 <code>.bindClass(map)</code></h3>
+                                <pre><code class="language-js">const active = nq.signal(false);
+
+nq("#pill").bindClass({
+  "is-active": active,
+  "is-muted": () =&gt; !active.value
+});</code></pre>
+
+                                <h3>5.4 <code>.bindList(store, renderItem, options?)</code></h3>
+                                <pre><code class="language-js">nq("#todo-list").bindList(todos, (todo, i) =&gt; `
+  &lt;li&gt;${i + 1}. ${todo.text}&lt;/li&gt;
+`);</code></pre>
+                            </section>
+
+                            <!-- GLOBAL API -->
+                            <section id="api-global" class="doc-section">
+                                <h2>6. Global API</h2>
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>API</th>
+                                            <th>Description</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td><code>nq(selector)</code></td>
+                                            <td>Select DOM nodes and return a chainable collection.</td>
+                                        </tr>
+                                        <tr>
+                                            <td><code>nq.ready(fn)</code></td>
+                                            <td>Run a callback when the DOM is ready.</td>
+                                        </tr>
+                                        <tr>
+                                            <td><code>nq.signal(initial)</code></td>
+                                            <td>Create a reactive signal.</td>
+                                        </tr>
+                                        <tr>
+                                            <td><code>nq.query(key, fetcher, options?)</code></td>
+                                            <td>Create a query store for async data.</td>
+                                        </tr>
+                                        <tr>
+                                            <td><code>nq.config(options)</code></td>
+                                            <td>Configure tokens and motion defaults globally.</td>
+                                        </tr>
+                                        <tr>
+                                            <td><code>nq.motion.setDefaults(options)</code></td>
+                                            <td>Override motion durations and easing.</td>
+                                        </tr>
+                                        <tr>
+                                            <td><code>nq.toast.success/error/info(msg, opts?)</code></td>
+                                            <td>Show toasts with consistent styling.</td>
+                                        </tr>
+                                        <tr>
+                                            <td><code>nq.devtools.*</code></td>
+                                            <td>Enable / disable UX lint and highlight issues.</td>
+                                        </tr>
+                                        <tr>
+                                            <td><code>nq.plugin(name, factory)</code></td>
+                                            <td>Register a plugin as a new chainable method.</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </section>
+
+                            <!-- DOM & EVENTS -->
+                            <section id="api-dom" class="doc-section">
+                                <h2>7. DOM &amp; events</h2>
+
+                                <h3>7.1 DOM methods</h3>
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>Method</th>
+                                            <th>Signature</th>
+                                            <th>Notes</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td><code>.text()</code></td>
+                                            <td><code>.text() ⇒ string</code>, <code>.text(value)</code></td>
+                                            <td>Get/set <code>textContent</code>.</td>
+                                        </tr>
+                                        <tr>
+                                            <td><code>.html()</code></td>
+                                            <td><code>.html() ⇒ string</code>, <code>.html(value)</code></td>
+                                            <td>Get/set <code>innerHTML</code>.</td>
+                                        </tr>
+                                        <tr>
+                                            <td><code>.attr()</code></td>
+                                            <td><code>.attr(name)</code>, <code>.attr(name, value)</code>,
+                                                <code>.attr(object)</code></td>
+                                            <td>Get or set attributes.</td>
+                                        </tr>
+                                        <tr>
+                                            <td><code>.addClass()</code> / <code>.removeClass()</code> /
+                                                <code>.toggleClass()</code></td>
+                                            <td>-</td>
+                                            <td>Manage CSS classes.</td>
+                                        </tr>
+                                        <tr>
+                                            <td><code>.css()</code></td>
+                                            <td><code>.css(name)</code>, <code>.css(name, value)</code>,
+                                                <code>.css(object)</code></td>
+                                            <td>Get/set inline styles.</td>
+                                        </tr>
+                                        <tr>
+                                            <td><code>.show()</code> / <code>.hide()</code> / <code>.toggle()</code>
+                                            </td>
+                                            <td>-</td>
+                                            <td>Toggle visibility via a utility class.</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                                <h3>7.2 Event methods</h3>
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>Method</th>
+                                            <th>Signature</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td><code>.on()</code></td>
+                                            <td><code>.on(event, handler)</code></td>
+                                        </tr>
+                                        <tr>
+                                            <td><code>.off()</code></td>
+                                            <td><code>.off(event, [handler])</code></td>
+                                        </tr>
+                                        <tr>
+                                            <td><code>.once()</code></td>
+                                            <td><code>.once(event, handler)</code></td>
+                                        </tr>
+                                        <tr>
+                                            <td><code>.trigger()</code></td>
+                                            <td><code>.trigger(event, [detail])</code></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </section>
+
+                            <!-- UI COMPONENTS -->
+                            <section id="api-ui" class="doc-section">
+                                <h2>8. UI components</h2>
+
+                                <h3>8.1 Cards &amp; buttons</h3>
+                                <pre><code class="language-js">nq(".card").uiCard({ elevateOnHover: true });
+
+nq("#primary").uiButton("primary");
+nq("#ghost").uiButton("ghost");
+nq("#danger").uiButton("danger");</code></pre>
+
+                                <h3>8.2 Toasts</h3>
+                                <pre><code class="language-js">nq.toast.success("Saved");
+nq.toast.error("Something went wrong");
+nq.toast.info("Heads up");</code></pre>
+
+                                <h3>8.3 Modals &amp; sheets</h3>
+                                <pre><code class="language-js">const modal = nq("#my-modal").uiModal();
+modal.open();
+
+const sheet = nq("#settings").uiSheet({ side: "right" });
+sheet.open();</code></pre>
+
+                                <h3>8.4 Tabs &amp; accordion</h3>
+                                <pre><code class="language-js">nq("#tabs").uiTabs();
+nq("#faq").uiAccordion({ multi: false });</code></pre>
+
+                                <h3>8.5 Virtual list</h3>
+                                <pre><code class="language-js">const rows = nq.query("rows", fetchManyRows);
+
+nq("#virtual-container").uiVirtualList(
+  rows,
+  row =&gt; `&lt;div&gt;${row.label}&lt;/div&gt;`,
+  { rowHeight: 24 }
+);</code></pre>
+                            </section>
+
+                            <!-- PATTERNS -->
+                            <section id="api-patterns" class="doc-section">
+                                <h2>9. Patterns: async buttons &amp; forms</h2>
+
+                                <h3>9.1 Async buttons</h3>
+                                <pre><code class="language-js">nq("#submit").uiAsyncButton(async () =&gt; {
+  await api.submit();
+}, {
+  loadingText: "Submitting…",
+  successText: "Submitted",
+  errorText:   "Submission failed"
+});</code></pre>
+
+                                <h3>9.2 Forms</h3>
+                                <pre><code class="language-js">const formApi = nq("#signup").uiForm({
+  mode: "onSubmit",
+  schema: {
+    email: { required: true, email: true },
+    name:  { required: true, min: 3 }
+  },
+  async onSubmit(values, ctx) {
+    await api.signup(values);
+    ctx.success("Welcome!");
+  }
+});
+
+// programmatic
+formApi.setValues({ email: "you@example.com" });
+formApi.validate();</code></pre>
+                            </section>
+
+                            <!-- LAYOUT -->
+                            <section id="api-layout" class="doc-section">
+                                <h2>10. Layout helpers</h2>
+                                <pre><code class="language-js">// Vertical stack
+nq("#sidebar").uiStack({ gap: "md", align: "stretch" });
+
+// Horizontal cluster
+nq("#actions").uiCluster({ gap: "sm", align: "center", wrap: true });
+
+// Sidebar layout
+nq("#layout").uiSidebar({ min: 260, max: 360, gap: "md" });
+
+// Responsive layout
+nq("#page").uiResponsiveLayout({
+  mobile: "stack",
+  tablet: "sidebar-left",
+  desktop: "sidebar-right"
+});</code></pre>
+                            </section>
+
+                            <!-- MOTION -->
+                            <section id="api-motion" class="doc-section">
+                                <h2>11. Motion</h2>
+                                <pre><code class="language-js">// Presets
+nq("#card").uiMotion("slideInBottom");
+
+// Custom
+nq("#chip").uiMotion({
+  enter: "translateY(6px)",
+  fromOpacity: 0,
+  toOpacity: 1,
+  duration: "medium"
+});
+
+// Global defaults
+nq.motion.setDefaults({
+  dur: { short: 120, medium: 220, long: 360 },
+  easing: { standard: "cubic-bezier(0.2,0,0,1)" }
+});</code></pre>
+                            </section>
+
+                            <!-- A11Y -->
+                            <section id="api-a11y" class="doc-section">
+                                <h2>12. Accessibility helpers</h2>
+
+                                <h3>12.1 Focus ring</h3>
+                                <pre><code class="language-js">nq("#custom-control").uiFocusRing();</code></pre>
+
+                                <h3>12.2 Focusable divs</h3>
+                                <pre><code class="language-js">nq("#fake-button")
+  .uiFocusable({ role: "button" })
+  .on("click", () =&gt; console.log("clicked"));</code></pre>
+                            </section>
+
+                            <!-- DEVTOOLS -->
+                            <section id="api-devtools" class="doc-section">
+                                <h2>13. Devtools &amp; UX lint</h2>
+                                <p>
+                                    nQuery’s devtools run a lightweight UX linter in development, watching
+                                    for common issues like clickable divs without roles, icon-only
+                                    buttons without labels, and tiny tap targets.
+                                </p>
+
+                                <pre><code class="language-js">nq.devtools.enableUXLint();
+nq.devtools.disableUXLint();
+
+nq.devtools.highlightIssue("tap-target-small");</code></pre>
+
+                                <div class="callout warn">
+                                    <strong>Keep lint on in development.</strong>
+                                    Treat warnings as part of your quality bar. They’re designed to catch issues
+                                    that are easy to miss in manual testing.
+                                </div>
+                            </section>
+
+                            <!-- PLUGINS -->
+                            <section id="api-plugins" class="doc-section">
+                                <h2>14. Plugins</h2>
+                                <p>
+                                    Plugins let you bundle custom behavior into a chainable method
+                                    on <code>NQObject</code>.
+                                </p>
+
+                                <pre><code class="language-js">nq.plugin("uiTimeline", function ($els, options, helpers) {
+  const { tokens, motion, a11y, devtools } = helpers;
+
+  $els.addClass("nq-card");
+  $els.text("Timeline will render here");
+});
+
+// usage
+nq("#timeline").uiTimeline({ compact: true });</code></pre>
+                            </section>
+
+                            <!-- API SUMMARY -->
+                            <section id="api-summary" class="doc-section">
+                                <h2>15. API reference summary</h2>
+
+                                <h3>15.1 Global</h3>
+                                <pre><code class="language-text">nq(selector)
+nq.ready(fn)
+nq.signal(initial)
+nq.query(key, fetcher, options?)
+nq.config(options)
+nq.motion.setDefaults(options)
+nq.toast.success(msg, opts?)
+nq.toast.error(msg, opts?)
+nq.toast.info(msg, opts?)
+nq.devtools.enableUXLint(opts?)
+nq.devtools.disableUXLint()
+nq.devtools.highlightIssue(id)
+nq.plugin(name, factory)</code></pre>
+
+                                <h3>15.2 Collection methods</h3>
+                                <pre><code class="language-text">DOM:
+  .text(), .text(value)
+  .html(), .html(value)
+  .attr(name), .attr(name, value), .attr(object)
+  .addClass(name), .removeClass(name), .toggleClass(name, [force])
+  .css(name), .css(name, value), .css(object)
+  .show(), .hide(), .toggle([show])
+
+Events:
+  .on(event, handler)
+  .off(event, [handler])
+  .once(event, handler)
+  .trigger(event, [detail])
+
+Bindings:
+  .bindText(signalOrFn)
+  .bindAttr(map)
+  .bindClass(map)
+  .bindList(store, renderItem, [options])
+
+UI & components:
+  .uiCard(options?)
+  .uiButton(variantOrOptions)
+  .uiInput(options?)
+  .uiSelect()
+  .uiCheckboxGroup()
+  .uiList()
+  .uiVirtualList(store, renderItem, options?)
+  .uiToast(options?)
+  .uiModal(options?)
+  .uiSheet(options?)
+  .uiTabs(options?)
+  .uiAccordion(options?)
+
+Patterns:
+  .uiAsyncButton(asyncFn, options?)
+  .uiForm(config)
+  .uiLoadable(store, options?)
+
+Layout & motion:
+  .uiStack(options?)
+  .uiCluster(options?)
+  .uiSidebar(options?)
+  .uiResponsiveLayout(config)
+  .uiMotion(presetOrOptions)
+  .uiFocusRing(options?)
+  .uiFocusable(options?)</code></pre>
+                            </section>
+
+                            <!-- LIVE DOC EXAMPLES -->
+                            <section class="doc-section">
+                                <h2>16. Live examples on this page</h2>
+
+                                <div class="example-live">
+                                    <div class="example-header">
+                                        <span>Counter card</span>
+                                        <span class="label">Powered by nQuery · signals</span>
+                                    </div>
+                                    <div class="example-row">
+                                        <div id="doc-counter-card">Count: 0</div>
+                                    </div>
+                                    <div class="example-row">
+                                        <button id="doc-inc">+1</button>
+                                        <button id="doc-dec">-1</button>
+                                    </div>
+                                </div>
+
+                                <div class="example-live" style="margin-top:10px;">
+                                    <div class="example-header">
+                                        <span>Query + list</span>
+                                        <span class="label">Query store · uiLoadable · bindList</span>
+                                    </div>
+                                    <div class="example-row">
+                                        <button id="doc-refetch">Refetch</button>
+                                        <span class="example-output" id="doc-query-status">status: idle</span>
+                                    </div>
+                                    <div id="doc-query-loadable" style="margin-bottom:6px;"></div>
+                                    <div id="doc-query-list"></div>
+                                </div>
+                            </section>
+                        </article>
+                    </main>
+                </div>
+            </section>
+        </div>
+
+        <!-- PLAYGROUND VIEW -->
+        <div id="view-playground" class="view" hidden>
+            <section id="playground" class="band playground-band">
+                <div class="band-inner">
+                    <header class="playground-header">
+                        <h2 class="band-title">Live playground</h2>
+                        <p class="band-subtitle">
+                            Experiment with nQuery directly in your browser. Pick an example, tweak the code,
+                            and re-run it - the preview is powered by the very same <code>nquery.js</code>
+                            you’ll use in production.
+                        </p>
+                    </header>
+
+                    <div class="playground-shell">
+                        <aside class="playground-sidebar" aria-label="Playground examples">
+                            <div class="playground-sidebar-inner">
+                                <h3 class="playground-sidebar-title">Examples</h3>
+                                <button type="button" class="playground-example-btn is-active" data-example="signals">
+                                    Signals &amp; cards
+                                </button>
+                                <button type="button" class="playground-example-btn" data-example="queries">
+                                    Queries &amp; lists
+                                </button>
+                                <button type="button" class="playground-example-btn" data-example="forms">
+                                    Forms &amp; async buttons
+                                </button>
+                            </div>
+                        </aside>
+
+                        <section class="playground-main" aria-label="Playground editor and preview">
+                            <div class="playground-main-top">
+                                <div class="playground-editor-pane">
+                                    <div class="playground-toolbar">
+                                        <span class="playground-toolbar-label">Editor</span>
+                                        <button type="button" id="pg-reset"
+                                            class="btn-secondary playground-toolbar-btn">
+                                            Reset example
+                                        </button>
+                                    </div>
+                                    <textarea id="pg-editor" class="playground-editor" spellcheck="false"
+                                        aria-label="nQuery playground editor"></textarea>
+                                </div>
+
+                                <div class="playground-preview-pane">
+                                    <div class="playground-toolbar">
+                                        <span class="playground-toolbar-label">Preview</span>
+                                        <button type="button" id="pg-run" class="btn-primary playground-toolbar-btn">
+                                            Run code
+                                        </button>
+                                    </div>
+                                    <div id="pg-preview-shell" class="playground-preview-shell">
+                                        <div id="pg-preview-status" class="playground-preview-status">
+                                            Ready. Click “Run code” to execute the example.
+                                        </div>
+                                        <div id="pg-preview-root" class="playground-preview-root"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <footer class="playground-footer">
+                                <p>
+                                    The playground runs each example inside a fresh container with
+                                    a <code>root</code> element and the global <code>nq</code> instance.
+                                    Any errors will be surfaced in the status bar above the preview.
+                                </p>
+                            </footer>
+                        </section>
+                    </div>
+                </div>
+
+                <!-- PLAYGROUND EXAMPLE SOURCES (archived; main playground is powered by app.js) -->
+                <script type="text/plain" id="example-signals">
+const count = nq.signal(0);
+
+root.innerHTML = `
+  &lt;div id="pg-card" class="card"&gt;Count: 0&lt;/div&gt;
+  &lt;div class="pg-actions"&gt;
+    &lt;button id="pg-inc"&gt;+1&lt;/button&gt;
+    &lt;button id="pg-dec"&gt;-1&lt;/button&gt;
+  &lt;/div&gt;
+`;
+
+nq("#pg-card")
+  .uiCard({ elevateOnHover: true })
+  .bindText(() =&gt; `Count: ${count.value}`);
+
+nq("#pg-inc")
+  .uiButton("primary")
+  .on("click", () =&gt; count.update(n =&gt; n + 1));
+
+nq("#pg-dec")
+  .uiButton("ghost")
+  .on("click", () =&gt; count.update(n =&gt; n - 1));
+        </script>
+
+                <script type="text/plain" id="example-queries">
+const users = nq.query("playground-users", async () =&gt; {
+  await new Promise(r =&gt; setTimeout(r, 500));
+  return [
+    { id: 1, name: "Ada Lovelace" },
+    { id: 2, name: "Alan Turing" },
+    { id: 3, name: "Grace Hopper" }
+  ];
+});
+
+root.innerHTML = `
+  &lt;div class="pg-actions"&gt;
+    &lt;button id="pg-refetch"&gt;Refetch&lt;/button&gt;
+    &lt;span id="pg-status"&gt;status: ${users.status.value}&lt;/span&gt;
+  &lt;/div&gt;
+  &lt;div id="pg-loadable"&gt;&lt;/div&gt;
+  &lt;div id="pg-list"&gt;&lt;/div&gt;
+`;
+
+nq("#pg-loadable").uiLoadable(users, { skeletonHeight: "18px" });
+nq("#pg-list").bindList(users, user =&gt; `
+  &lt;div class="pg-row"&gt;• ${user.name}&lt;/div&gt;
+`);
+
+users.status.subscribe(v =&gt; {
+  const el = document.getElementById("pg-status");
+  if (el) el.textContent = `status: ${v}`;
+});
+
+nq("#pg-refetch")
+  .uiButton("primary")
+  .uiAsyncButton(
+    async () =&gt; {
+      await users.refetch(true);
+    },
+    { loadingText: "Refetching…", successText: "Done" }
+  );
+        </script>
+
+                <script type="text/plain" id="example-forms">
+root.innerHTML = `
+  &lt;form id="pg-form" class="pg-form"&gt;
+    &lt;div data-field&gt;
+      &lt;label&gt;Email&lt;/label&gt;
+      &lt;input name="email" type="email" placeholder="you@example.com" /&gt;
+    &lt;/div&gt;
+    &lt;div data-field&gt;
+      &lt;label&gt;Name&lt;/label&gt;
+      &lt;input name="name" type="text" placeholder="Ada Lovelace" /&gt;
+    &lt;/div&gt;
+    &lt;button type="submit" id="pg-save"&gt;Save profile&lt;/button&gt;
+  &lt;/form&gt;
+`;
+
+const api = {
+  async save(values) {
+    await new Promise(r =&gt; setTimeout(r, 600));
+    if (!values.email.includes("@")) {
+      throw new Error("Invalid email");
+    }
+  }
+};
+
+const formApi = nq("#pg-form").uiForm({
+  mode: "onBlur",
+  schema: {
+    email: { required: true, email: true },
+    name:  { required: true, min: 3 }
+  },
+  async onSubmit(values, ctx) {
+    await api.save(values);
+    ctx.success("Profile saved from playground");
+  }
+});
+
+nq("#pg-save").uiAsyncButton(async () =&gt; {
+  await formApi.submit();
+}, { loadingText: "Saving…", successText: "Saved" });
+        </script>
+            </section>
+        </div>
+    </main>
+
+    <footer>
+        nQuery - next-generation jQuery for modern UX.
+    </footer>
+
+    <!-- APP SCRIPT: handles view switching + live docs & playground -->
+    <script type="module" src="app.js"></script>
+</body>
+
+</html>
